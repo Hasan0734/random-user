@@ -1,12 +1,28 @@
 const { body } = require("express-validator");
 
-exports.userValidate = () => {
+module.exports.userValidate = () => {
   return [
-    body("id", "Id required").exists().notEmpty().bail().isNumeric(),
-    body("name", "Name required").exists(),
-    body("gender", "Gender required").exists(),
-    body("contact", "Contact requried").exists(),
-    body("address", "Address requried").exists(),
-    body("photoUrl", "Photo url requried").exists(),
+    body("id")
+      .not()
+      .isEmpty()
+      .withMessage("ID is required")
+      .custom((value, { req }) => typeof value === "number")
+      .withMessage("ID is must contain number"),
+    body("name", "Name is required").exists(),
+    body("gender", "Gender is required").exists(),
+    body("contact", "Contact is requried").exists(),
+    body("address", "Address is requried").exists(),
+    body("photoUrl", "Photo url is requried").exists(),
+  ];
+};
+
+module.exports.validateId = () => {
+  return [
+    body("id")
+      .not()
+      .isEmpty()
+      .withMessage("ID is required")
+      .custom((value, { req }) => typeof value === "number")
+      .withMessage("ID is must contain number"),
   ];
 };
