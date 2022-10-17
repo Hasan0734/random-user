@@ -40,35 +40,39 @@ module.exports.getAllUser = (req, res) => {
 };
 
 module.exports.saveUser = (req, res) => {
-  const { gender, name, contact, address, photoUrl } = rq.body;
-//   const errors = validationResult(req);
-    // if (!errors.isEmpty()) {
-    //   console.log('first')
-    //   res.status(422).json({ errors: errors.array() });
-    // } 
-        console.log("second");
-    const prevUser = users();
-    const usersData = prevUser;
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    res.status(422).json({ errors: errors.array() });
+    return;
+  }
+  const {id, gender, name, contact, address, photoUrl } = req.body;
+  const prevUser = users();
+  const usersData = prevUser;
 
-    const newUser = {
-      id: usersData.length + 1,
-      gender: gender,
-      name: name,
-      contact: contact,
-      address: address,
-      photoUrl: photoUrl,
-    };
+  const newUser = {
+    id: id,
+    gender: gender,
+    name: name,
+    contact: contact,
+    address: address,
+    photoUrl: photoUrl,
+  };
 
-    usersData.push(newUser);
+  usersData.push(newUser);
 
-    // try {
-    //   fs.writeFileSync("users.json", JSON.stringify(usersData));
-    //   res.status(400).json({
-    //     success: true,
-    //     message: "Success",
-    //     data: users(),
-    //   });
-    // } catch (err) {
-    //   console.log(err);
-    // }
+  try {
+    fs.writeFileSync("users.json", JSON.stringify(usersData));
+    res.status(200).json({
+      success: true,
+      message: "Success",
+      data: users(),
+    });
+  } catch (err) {
+    console.log(err);
+    res.send(err.message);
+  }
+};
+
+module.exports.updateUser = (req, res) => {
+  res.send("Helllo update");
 };

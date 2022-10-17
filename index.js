@@ -1,7 +1,7 @@
 const express = require("express");
 const errorHandler = require("./middleware/errorHandler");
 const userRouter = require("./routes/v1/users.route");
-const {body} = require("express-validator");
+const { body } = require("express-validator");
 const port = process.env.PORT || 5000;
 const app = express();
 
@@ -9,7 +9,7 @@ app.use(express.json());
 app.use(body());
 
 //random user route
-app.use("/api/v1/user", userRouter);
+app.use("/api/v1/user/", userRouter);
 
 // not found route
 app.all("*", (req, res) => {
