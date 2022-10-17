@@ -9,7 +9,7 @@ const users = () => {
 module.exports.getRandromUser = async (req, res) => {
   const usersData = users();
   const randomNumber = await Math.ceil(Math.random() * usersData.length);
-  const randomUser = usersData.find((user) => user.id === randomNumber);
+  const randomUser = usersData.find((user) => Number(user.id) === randomNumber);
   if (randomUser) {
     res.status(200).json({
       success: true,

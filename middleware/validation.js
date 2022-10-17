@@ -2,7 +2,7 @@ const { body } = require("express-validator");
 
 exports.userValidate = () => {
   return [
-    body("id",).isInt(),
+    body("id", "Id required").exists().notEmpty().bail().isNumeric(),
     body("name", "Name required").exists(),
     body("gender", "Gender required").exists(),
     body("contact", "Contact requried").exists(),
