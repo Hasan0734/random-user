@@ -1,7 +1,11 @@
 const express = require("express");
 const router = express.Router();
-const userController = require("../../controllers/users.controller");
+const usersController = require("../../controllers/users.controller");
+const valid = require('../../middleware/validation');
 
-router.route("/").get(userController.getRandromUser).post();
+router.get("/random", usersController.getRandromUser);
+router.get("/all", usersController.getAllUser);
+router.post("/save", usersController.saveUser);
+
 
 module.exports = router;
