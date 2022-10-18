@@ -7,7 +7,10 @@ router.get("/random", usersController.getRandromUser);
 router.get("/all", usersController.getAllUser);
 router.post("/save", valid.userValidate(), usersController.saveUser);
 router.patch("/update", valid.validateId(), usersController.updateUser);
-router.delete('/delete', valid.validateId(), usersController.deleteUser)
+router.delete('/delete', valid.validateId(), usersController.deleteUser);
+
+router.patch("/bulk-update",valid.vallidateBody(), usersController.multipleUpdate);
+
 
 
 

@@ -26,3 +26,38 @@ module.exports.validateId = () => {
       .withMessage("ID is must contain number"),
   ];
 };
+
+module.exports.vallidateBody = () => {
+  return [
+    body("")
+      .isArray()
+      .withMessage("Invalid array")
+      .custom((value, { req }) => {
+        const allNumber = value.map((val) => {
+          if (!!val.id) {
+            if (typeof val.id === "number") {
+              return true;
+            } else {
+              return false;
+            }
+          } else {
+            console.log("hello");
+            return false;
+          }
+        });
+        const trueNumber = allNumber.every((element) => element === true);
+        if (trueNumber) {
+          return true;
+        }
+        return false;
+      })
+      .withMessage("ID must be number and required"),
+  ];
+};
+
+module.exports.checkErrors = (errors, res) => {
+  if (!errors.isEmpty()) {
+    res.status(422).json({ errors: errors.array() });
+    return;
+  }
+};
