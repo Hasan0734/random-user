@@ -4,9 +4,6 @@
   "main": "index.js",
   "author": "Jahid Hasan",
   "license": "MIT",
-  "engines": {
-    "node": "14.x"
-  },
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js",
