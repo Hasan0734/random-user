@@ -13,13 +13,11 @@ module.exports.getRandromUser = async (req, res) => {
   const randomNumber = await Math.ceil(Math.random() * usersData.length);
   const randomUser = usersData.find((user) => Number(user.id) === randomNumber);
   if (randomUser) {
-    res.status(200).json({
-      success: true,
-      data: randomUser,
-    });
     response.success(res, randomUser);
+    return;
   } else {
     response.notFound(res);
+    return;
   }
 };
 
@@ -28,8 +26,10 @@ module.exports.getAllUser = (req, res) => {
   if (req.query.max) {
     const maxData = usersData.slice(0, req.query.max);
     response.success(res, maxData);
+    return;
   } else {
     response.success(res, usersData);
+    return;
   }
 };
 
@@ -51,8 +51,8 @@ module.exports.saveUser = (req, res) => {
     const usersData = prevUser;
     const newUser = {
       id: id,
-      gender: gender,
       name: name,
+      gender: gender,
       contact: contact,
       address: address,
       photoUrl: photoUrl,
@@ -65,6 +65,7 @@ module.exports.saveUser = (req, res) => {
       console.log(err);
       res.send(err.message);
     }
+    return;
   }
 };
 
@@ -85,8 +86,8 @@ module.exports.updateUser = (req, res) => {
     response.notFound(res);
     return;
   } else {
-    const newRandomUsers = users;
-    let userIndex = newRandomUsers.findIndex((user) => user.id === id);
+    let newRandomUsers = users;
+    const userIndex = newRandomUsers.findIndex((user) => user.id === id);
     const findUser = users[userIndex];
     newRandomUsers[userIndex].name = name || findUser.name;
     newRandomUsers[userIndex].gender = gender || findUser.gender;
@@ -95,7 +96,7 @@ module.exports.updateUser = (req, res) => {
     newRandomUsers[userIndex].photoUrl = photoUrl || findUser.photoUrl;
     try {
       fs.writeFileSync("users.json", JSON.stringify(newRandomUsers));
-      response.success(res, randomUsers()[userIndex]);
+      response.success(res, newRandomUsers);
     } catch (err) {
       console.log(err);
       res.send(err.message);
