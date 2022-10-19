@@ -12,6 +12,13 @@ app.use(body());
 //random user route
 app.use("/api/v1/user/", userRouter);
 
+// root response
+app.get("/", (req, res) => {
+  res.status(200).json({
+    message: "Hello, Welcome !",
+  });
+});
+
 // not found route
 app.all("*", (req, res) => {
   res.send("Route not found");
