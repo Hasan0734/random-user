@@ -3,39 +3,56 @@
 This API application is random users. It's give a randomly user. This API working for randomly user, all user, limited user, save user, updpate user, multiple update, and delete.
 
 
-## API
-
+## API Reference
 
 Main API : [https://radom-user.onrender.com/api/v1/](https://radom-user.onrender.com/api/v1/)
 
-### End Point
 
- **GET/user/random** A random user
-  * Get a random user from the all users
+#### Get random user
+
+```http
+ GET/user/random
+```
+#### Get all random users
+
+```http
+ GET/user/all
+ GET/user/all?max=number
+```
+#### Save a random user
+```http
+ POST/user/save
+```
+
+| Object key | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `id` | `number` | **Required**. user id |
+| `name` | `string` | **Required**. user user |
+| `gender` | `string` | **Required**. user gender |
+| `contact` | `any` | **Required**. user contact info |
+| `address` | `string` | **Required**. user address info |
+| `photoUrl` | `string` | **Required**. user photo url |
+
+#### Update a random user
+```http
+ PATCH/user/save
+```
+
+| Object key | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `id` | `number` | **Required**. user id |
 
 
- **GET/user/all** A list of random users
-  * Get all users
-  * Send query to max=number, Get limit users
+#### Update multiple users
+```http
+ PATCH/user/bulk-update
+```
 
- **POST /user/save** Save a random user
-  * Save a user in the random users
-  * Send a JSON on body
-    * id: is required, type number
-    * name: is required, type string
-    * gender: is required, type string
-    * contact: is required, type string
-    * address: is required, type string
-    * photoUrl: is required, type string
+Send a array on json
+
+| Object key | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `id` | `number` | **Required**. user id |
 
 
- **PATCH/user/update** Update a random user
-  * Send id on body
-  * Id type number
-  * Content-Type: json
-
- **PATCH/user/bulk-update** Update a random user
-
-  * Send json on body
-  * JSON is array of object
-  * Object include id type number 
+Thank you! ❤️❤️
