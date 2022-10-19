@@ -1,4 +1,5 @@
 const express = require("express");
+const dotenv = require("dotenv").config();
 const errorHandler = require("./middleware/errorHandler");
 const userRouter = require("./routes/v1/users.route");
 const { body } = require("express-validator");
