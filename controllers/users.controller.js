@@ -60,7 +60,7 @@ module.exports.saveUser = (req, res) => {
     };
     usersData.push(newUser);
     try {
-      fs.writeFileSync("users.json", JSON.stringify(usersData));
+      fs.writeFileSync(root + "/public/users.json", JSON.stringify(usersData));
       response.success(res, randomUsers());
     } catch (err) {
       console.log(err);
@@ -96,7 +96,10 @@ module.exports.updateUser = (req, res) => {
     newRandomUsers[userIndex].address = address || findUser.address;
     newRandomUsers[userIndex].photoUrl = photoUrl || findUser.photoUrl;
     try {
-      fs.writeFileSync("users.json", JSON.stringify(newRandomUsers));
+      fs.writeFileSync(
+        root + "/public/users.json",
+        JSON.stringify(newRandomUsers)
+      );
       response.success(res, newRandomUsers);
     } catch (err) {
       console.log(err);
@@ -121,7 +124,7 @@ module.exports.deleteUser = (req, res) => {
   } else {
     const removeUser = users.filter((user) => user.id !== id);
     try {
-      fs.writeFileSync("users.json", JSON.stringify(removeUser));
+      fs.writeFileSync(root + "/public/users.json", JSON.stringify(removeUser));
       response.success(res, removeUser);
     } catch (err) {
       res.send(err.message);
@@ -158,7 +161,7 @@ module.exports.multipleUpdate = (req, res) => {
   });
 
   try {
-    fs.writeFileSync("users.json", JSON.stringify(updated));
+    fs.writeFileSync(root + "/public/users.json", JSON.stringify(updated));
     response.success(res, updated);
   } catch (err) {
     console.log(err);
