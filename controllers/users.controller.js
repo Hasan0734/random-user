@@ -4,7 +4,7 @@ const response = require("../response/response");
 const { checkErrors } = require("../middleware/validation");
 
 const randomUsers = () => {
-  const users = fs.readFileSync("users.json");
+  const users = fs.readFileSync("./public/users.json");
   return JSON.parse(users);
 };
 
@@ -23,6 +23,7 @@ module.exports.getRandromUser = async (req, res) => {
 
 module.exports.getAllUser = (req, res) => {
   const usersData = randomUsers();
+  console.log(usersData)
   if (req.query.max) {
     const maxData = usersData.slice(0, req.query.max);
     response.success(res, maxData);
