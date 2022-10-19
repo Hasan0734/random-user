@@ -5,26 +5,30 @@ const { validationResult } = require("express-validator");
 const response = require("../response/response");
 
 const randomUsers = () => {
-  const users = fs.readFileSync(root + "/public/users.json");
-  return JSON.parse(users);
+  try {
+    const users = fs.readFileSync(root + "/public/users.json");
+    return JSON.parse(users);
+  } catch (err) {
+    console.log(err);
+  }
 };
 
 module.exports.getRandromUser = async (req, res) => {
-  const usersData = randomUsers();
-  const randomNumber = await Math.ceil(Math.random() * usersData.length);
-  const randomUser = usersData.find((user) => Number(user.id) === randomNumber);
-  if (randomUser) {
-    response.success(res, randomUser);
-    return;
-  } else {
-    response.notFound(res);
-    return;
-  }
+  // const usersData = randomUsers();
+  // const randomNumber = await Math.ceil(Math.random() * usersData.length);
+  // const randomUser = usersData.find((user) => Number(user.id) === randomNumber);
+  // if (randomUser) {
+  //   response.success(res, randomUser);
+  //   return;
+  // } else {
+  //   response.notFound(res);
+  //   return;
+  // }
+  response.success(res, [])
 };
 
 module.exports.getAllUser = (req, res) => {
   const usersData = randomUsers();
-  console.log(usersData);
   if (req.query.max) {
     const maxData = usersData.slice(0, req.query.max);
     response.success(res, maxData);
@@ -166,3 +170,5 @@ module.exports.multipleUpdate = (req, res) => {
     res.send(err.message);
   }
 };
+
+
