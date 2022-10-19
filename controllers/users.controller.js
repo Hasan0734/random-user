@@ -1,10 +1,11 @@
 const fs = require("fs");
+const path = require("path");
+const root = path.dirname(require.main.filename);
 const { validationResult } = require("express-validator");
 const response = require("../response/response");
-const { checkErrors } = require("../middleware/validation");
 
 const randomUsers = () => {
-  const users = fs.readFileSync("./public/users.json");
+  const users = fs.readFileSync(root + "/public/users.json");
   return JSON.parse(users);
 };
 
@@ -23,7 +24,7 @@ module.exports.getRandromUser = async (req, res) => {
 
 module.exports.getAllUser = (req, res) => {
   const usersData = randomUsers();
-  console.log(usersData)
+  console.log(usersData);
   if (req.query.max) {
     const maxData = usersData.slice(0, req.query.max);
     response.success(res, maxData);
