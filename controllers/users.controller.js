@@ -108,29 +108,7 @@ module.exports.updateUser = (req, res) => {
   }
 };
 
-module.exports.deleteUser = (req, res) => {
-  // check validation errors
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    response.errorRes(errors.array(), res, 422);
-    return;
-  }
 
-  const { id } = req.body;
-  const users = randomUsers();
-  const alreayExist = users.find((user) => user.id === id);
-  if (!alreayExist) {
-    response.notFound(res);
-  } else {
-    const removeUser = users.filter((user) => user.id !== id);
-    try {
-      fs.writeFileSync(root + "/public/users.json", JSON.stringify(removeUser));
-      response.success(res, removeUser);
-    } catch (err) {
-      res.send(err.message);
-    }
-  }
-};
 
 module.exports.multipleUpdate = (req, res) => {
   const errors = validationResult(req);
@@ -166,5 +144,30 @@ module.exports.multipleUpdate = (req, res) => {
   } catch (err) {
     console.log(err);
     res.send(err.message);
+  }
+};
+
+
+module.exports.deleteUser = (req, res) => {
+  // check validation errors
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    response.errorRes(errors.array(), res, 422);
+    return;
+  }
+
+  const { id } = req.body;
+  const users = randomUsers();
+  const alreayExist = users.find((user) => user.id === id);
+  if (!alreayExist) {
+    response.notFound(res);
+  } else {
+    const removeUser = users.filter((user) => user.id !== id);
+    try {
+      fs.writeFileSync(root + "/public/users.json", JSON.stringify(removeUser));
+      response.success(res, removeUser);
+    } catch (err) {
+      res.send(err.message);
+    }
   }
 };

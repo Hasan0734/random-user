@@ -33,6 +33,26 @@ module.exports.vallidateBody = () => {
       .isArray()
       .withMessage("Invalid array")
       .custom((value, { req }) => {
+        const allNumber =
+          value.length > 0
+            ? value.map((val) => {
+                if (typeof val === "object") {
+                  return true;
+                } else {
+                  return false;
+                }
+              })
+            : false;
+
+        const trueNumber = allNumber.every((element) => element === true);
+        if (trueNumber) {
+          return true;
+        } else {
+          return false;
+        }
+      })
+      .withMessage("Array of object requried")
+      .custom((value) => {
         const allNumber = value.map((val) => {
           if (!!val.id) {
             if (typeof val.id === "number") {
@@ -41,15 +61,16 @@ module.exports.vallidateBody = () => {
               return false;
             }
           } else {
-            console.log("hello");
             return false;
           }
         });
+
         const trueNumber = allNumber.every((element) => element === true);
         if (trueNumber) {
           return true;
+        } else {
+          return false;
         }
-        return false;
       })
       .withMessage("ID must be number and required"),
   ];
